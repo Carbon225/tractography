@@ -1,4 +1,5 @@
 import numpy as np
+import pickle
 from tqdm import tqdm
 
 
@@ -13,11 +14,13 @@ def interpolate_streamline(streamline, n):
 
 
 if __name__ == '__main__':
-    streamlines = np.load('streamlines.npz')
+    # streamlines = np.load('streamlines.npz')
+    with open("streamlines.pkl", "rb") as f:
+        streamlines = pickle.load(f)
 
     interpolated_streamlines = []
     for i in tqdm(range(len(streamlines))):
-        streamline = streamlines[f'arr_{i}'].astype(np.float32)
+        streamline = streamlines[i].astype(np.float32)
         interpolated_streamline = interpolate_streamline(streamline, 256)
         interpolated_streamlines.append(interpolated_streamline)
 
